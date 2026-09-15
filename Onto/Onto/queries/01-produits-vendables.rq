@@ -1,0 +1,11 @@
+# Produits classés ProduitVendable par la règle SWRL R2 (nécessite le graphe inféré).
+PREFIX eco: <https://thiilelli.github.io/Onto/ontology#>
+
+SELECT ?produit ?nom ?quantite
+WHERE {
+  ?p a eco:ProduitVendable ;
+     eco:nomProduit ?nom ;
+     ^eco:concerneProduit/eco:quantite ?quantite .
+  BIND(STRAFTER(STR(?p), "#") AS ?produit)
+}
+ORDER BY ?produit

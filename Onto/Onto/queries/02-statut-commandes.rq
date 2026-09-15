@@ -1,0 +1,13 @@
+# Statut de chaque commande et classes inférées par les règles R1 et R3.
+PREFIX eco: <https://thiilelli.github.io/Onto/ontology#>
+
+SELECT ?commande ?client ?statut ?prioritaire ?valide
+WHERE {
+  ?c a eco:Commande ;
+     eco:statut ?statut ;
+     eco:estPasseePar/eco:nomClient ?client .
+  BIND(STRAFTER(STR(?c), "#") AS ?commande)
+  BIND(EXISTS { ?c a eco:CommandePrioritaire } AS ?prioritaire)
+  BIND(EXISTS { ?c a eco:CommandeValide } AS ?valide)
+}
+ORDER BY ?commande

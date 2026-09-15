@@ -1,0 +1,103 @@
+@prefix sh:   <http://www.w3.org/ns/shacl#> .
+@prefix xsd:  <http://www.w3.org/2001/XMLSchema#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix eco:  <https://thiilelli.github.io/Onto/ontology#> .
+@prefix ecosh: <https://thiilelli.github.io/Onto/shapes#> .
+
+# OWL raisonne en monde ouvert : une commande sans facture n'est pas une erreur,
+# la facture est simplement inconnue. SHACL valide les données en monde fermé :
+# ce qui n'est pas dans le graphe est considéré comme absent.
+
+ecosh: sh:declare [
+    sh:prefix "eco" ;
+    sh:namespace "https://thiilelli.github.io/Onto/ontology#"^^xsd:anyURI
+] .
+
+ecosh:EmailShape a sh:PropertyShape ;
+    sh:targetSubjectsOf eco:emailClient, eco:emailBoutique, eco:emailFournisseur, eco:emailServiceClient ;
+    sh:path [ sh:alternativePath ( eco:emailClient eco:emailBoutique eco:emailFournisseur eco:emailServiceClient ) ] ;
+    sh:datatype xsd:string ;
+    sh:pattern "^[^@\\s]+@[^@\\s]+\\.[^@\\s]+$" ;
+    sh:message "Adresse email invalide." .
+
+ecosh:ProduitShape a sh:NodeShape ;
+    sh:targetClass eco:Produit ;
+    sh:property [ sh:path eco:nomProduit ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:string ] ;
+    sh:property [ sh:path eco:prix ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+                  sh:minExclusive 0 ; sh:message "Un produit doit avoir un prix unique strictement positif." ] ;
+    sh:property [ sh:path eco:appartientA ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Categorie ] .
+
+ecosh:AvisShape a sh:NodeShape ;
+    sh:targetClass eco:Avis ;
+    sh:property [ sh:path eco:note ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ;
+                  sh:minInclusive 1 ; sh:maxInclusive 5 ; sh:message "La note d'un avis doit être un entier entre 1 et 5." ] ;
+    sh:property [ sh:path eco:concerne ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Produit ] ;
+    sh:property [ sh:path eco:estEcritPar ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Client ] .
+
+ecosh:CommandeShape a sh:NodeShape ;
+    sh:targetClass eco:Commande ;
+    sh:property [ sh:path eco:contient ; sh:minCount 1 ; sh:maxCount 20 ; sh:class eco:Produit ] ;
+    sh:property [ sh:path eco:estPasseePar ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Client ] ;
+    sh:property [ sh:path eco:genere ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Facture ] ;
+    sh:property [ sh:path eco:estLivreePar ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Livraison ] ;
+    sh:property [ sh:path eco:estPayeePar ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Paiement ] ;
+    sh:property [ sh:path eco:dateCommande ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:dateTime ] ;
+    sh:property [ sh:path eco:statut ; sh:minCount 1 ; sh:maxCount 1 ; sh:in ( "En cours" "Livrée" "Annulée" ) ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Événement ({?evenement}) daté avant la commande." ;
+        sh:prefixes ecosh: ;
+        sh:select """
+            SELECT $this ?evenement WHERE {
+                $this eco:dateCommande ?dc .
+                {
+                    $this eco:estPayeePar ?evenement . ?evenement eco:datePaiement ?d .
+                } UNION {
+                    $this eco:genere ?evenement . ?evenement eco:dateFacture ?d .
+                } UNION {
+                    $this eco:estLivreePar ?evenement . ?evenement eco:dateLivraison ?d .
+                }
+                FILTER (?d < ?dc)
+            }
+        """
+    ] .
+
+ecosh:StockShape a sh:NodeShape ;
+    sh:targetClass eco:Stock ;
+    sh:property [ sh:path eco:quantite ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 0 ] ;
+    sh:property [ sh:path eco:concerneProduit ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Produit ] ;
+    sh:property [ sh:path eco:estStockeDans ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Entrepot ] .
+
+ecosh:EntrepotShape a sh:NodeShape ;
+    sh:targetClass eco:Entrepot ;
+    sh:property [ sh:path eco:capacite ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:integer ; sh:minInclusive 0 ] ;
+    sh:sparql [
+        a sh:SPARQLConstraint ;
+        sh:message "Capacité dépassée : {?total} unités stockées pour une capacité de {?cap}." ;
+        sh:prefixes ecosh: ;
+        sh:select """
+            SELECT $this ?total ?cap WHERE {
+                $this eco:capacite ?cap .
+                { SELECT $this (SUM(?q) AS ?total) WHERE {
+                    ?s eco:estStockeDans $this ; eco:quantite ?q .
+                } GROUP BY $this }
+                FILTER (?total > ?cap)
+            }
+        """
+    ] .
+
+ecosh:RemiseShape a sh:NodeShape ;
+    sh:targetClass eco:Remise ;
+    sh:property [ sh:path eco:pourcentage ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ;
+                  sh:minExclusive 0 ; sh:maxInclusive 100 ] ;
+    sh:property [ sh:path eco:appliqueRemiseA ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Produit ] .
+
+ecosh:PaiementShape a sh:NodeShape ;
+    sh:targetClass eco:Paiement ;
+    sh:property [ sh:path eco:montant ; sh:minCount 1 ; sh:maxCount 1 ; sh:datatype xsd:decimal ; sh:minExclusive 0 ] ;
+    sh:property [ sh:path eco:estEffectuePar ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Client ] .
+
+ecosh:CouponShape a sh:NodeShape ;
+    sh:targetClass eco:Coupon ;
+    sh:property [ sh:path eco:code ; sh:minCount 1 ; sh:maxCount 1 ; sh:pattern "^[A-Z0-9]{4,20}$" ] ;
+    sh:property [ sh:path eco:appliqueCouponA ; sh:minCount 1 ; sh:maxCount 1 ; sh:class eco:Commande ] .

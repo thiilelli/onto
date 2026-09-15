@@ -1,0 +1,13 @@
+# Montant de chaque commande, remises produit déduites (coupons non valorisés dans le modèle).
+PREFIX eco: <https://thiilelli.github.io/Onto/ontology#>
+
+SELECT ?commande (SUM(?prixNet) AS ?totalNet) (SUM(?prix) AS ?totalBrut)
+WHERE {
+  ?c a eco:Commande ; eco:contient ?p .
+  ?p eco:prix ?prix .
+  OPTIONAL { ?p eco:aPourRemise/eco:pourcentage ?pct }
+  BIND(?prix * (1 - COALESCE(?pct, 0) / 100) AS ?prixNet)
+  BIND(STRAFTER(STR(?c), "#") AS ?commande)
+}
+GROUP BY ?commande
+ORDER BY ?commande

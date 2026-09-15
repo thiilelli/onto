@@ -1,0 +1,5 @@
+rdflib>=7.0,<8
+pyshacl>=0.26
+# 0.47 : le Pellet embarqué par les versions >= 0.50 exige Java 25
+owlready2==0.47
+pytest>=8

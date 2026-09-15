@@ -1,0 +1,1145 @@
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix eco: <https://thiilelli.github.io/Onto/ontology#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix swrl: <http://www.w3.org/2003/11/swrl#> .
+@prefix swrla: <http://swrl.stanford.edu/ontologies/3.3/swrla.owl#> .
+@prefix swrlb: <http://www.w3.org/2003/11/swrlb#> .
+@prefix vann: <http://purl.org/vocab/vann/> .
+@prefix var: <https://thiilelli.github.io/Onto/ontology/var#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+<https://thiilelli.github.io/Onto/ontology> a owl:Ontology ;
+    dcterms:created "2025-11"^^xsd:gYearMonth ;
+    dcterms:creator "Thilleli Rouas" ;
+    dcterms:description "Ontologie OWL 2 du domaine du commerce électronique (clients, commandes, produits, stocks, paiements, livraisons) avec règles SWRL d'inférence et jeu d'individus de test."@fr ;
+    dcterms:license <https://opensource.org/licenses/MIT> ;
+    dcterms:modified "2026-09-15"^^xsd:date ;
+    dcterms:title "E-commerce ontology"@en,
+        "Ontologie e-commerce"@fr ;
+    vann:preferredNamespacePrefix "eco" ;
+    vann:preferredNamespaceUri "https://thiilelli.github.io/Onto/ontology#" ;
+    owl:versionIRI <https://thiilelli.github.io/Onto/ontology/1.0.0> ;
+    owl:versionInfo "1.0.0" .
+
+eco:adresseBoutique a owl:DatatypeProperty ;
+    rdfs:label "shop address"@en,
+        "adresse de la boutique"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:adresse .
+
+eco:adresseEntrepot a owl:DatatypeProperty ;
+    rdfs:label "warehouse address"@en,
+        "adresse de l'entrepôt"@fr ;
+    rdfs:domain eco:Entrepot ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:adresse .
+
+eco:capacite a owl:DatatypeProperty ;
+    rdfs:label "capacity"@en,
+        "capacité"@fr ;
+    rdfs:domain eco:Entrepot ;
+    rdfs:range xsd:integer .
+
+eco:code a owl:DatatypeProperty ;
+    rdfs:label "code"@en,
+        "code"@fr ;
+    rdfs:domain eco:Coupon ;
+    rdfs:range xsd:string .
+
+eco:commentaire a owl:DatatypeProperty ;
+    rdfs:label "comment"@en,
+        "commentaire"@fr ;
+    rdfs:domain eco:Avis ;
+    rdfs:range xsd:string .
+
+eco:dateCommande a owl:DatatypeProperty ;
+    rdfs:label "order date"@en,
+        "date de commande"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf eco:date .
+
+eco:dateCoupon a owl:DatatypeProperty ;
+    rdfs:label "coupon date"@en,
+        "date du coupon"@fr ;
+    rdfs:domain eco:Coupon ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf eco:date .
+
+eco:dateFacture a owl:DatatypeProperty ;
+    rdfs:label "invoice date"@en,
+        "date de facturation"@fr ;
+    rdfs:domain eco:Facture ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf eco:date .
+
+eco:dateLivraison a owl:DatatypeProperty ;
+    rdfs:label "delivery date"@en,
+        "date de livraison"@fr ;
+    rdfs:domain eco:Livraison ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf eco:date .
+
+eco:datePaiement a owl:DatatypeProperty ;
+    rdfs:label "payment date"@en,
+        "date de paiement"@fr ;
+    rdfs:domain eco:Paiement ;
+    rdfs:range xsd:dateTime ;
+    rdfs:subPropertyOf eco:date .
+
+eco:description a owl:DatatypeProperty ;
+    rdfs:label "description"@en,
+        "description"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range xsd:string .
+
+eco:emailBoutique a owl:DatatypeProperty ;
+    rdfs:label "shop email"@en,
+        "email de la boutique"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:email .
+
+eco:emailClient a owl:DatatypeProperty ;
+    rdfs:label "customer email"@en,
+        "email du client"@fr ;
+    rdfs:domain eco:Client ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:email .
+
+eco:emailFournisseur a owl:DatatypeProperty ;
+    rdfs:label "supplier email"@en,
+        "email du fournisseur"@fr ;
+    rdfs:domain eco:Fournisseur ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:email .
+
+eco:emailServiceClient a owl:DatatypeProperty ;
+    rdfs:label "customer service email"@en,
+        "email du service client"@fr ;
+    rdfs:domain eco:ServiceClient ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:email .
+
+eco:montant a owl:DatatypeProperty ;
+    rdfs:label "amount"@en,
+        "montant"@fr ;
+    rdfs:domain eco:Paiement ;
+    rdfs:range xsd:decimal .
+
+eco:nomBoutique a owl:DatatypeProperty ;
+    rdfs:label "shop name"@en,
+        "nom de la boutique"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:nomCategorie a owl:DatatypeProperty ;
+    rdfs:label "category name"@en,
+        "nom de la catégorie"@fr ;
+    rdfs:domain eco:Categorie ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:nomClient a owl:DatatypeProperty ;
+    rdfs:label "customer name"@en,
+        "nom du client"@fr ;
+    rdfs:domain eco:Client ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:nomFournisseur a owl:DatatypeProperty ;
+    rdfs:label "supplier name"@en,
+        "nom du fournisseur"@fr ;
+    rdfs:domain eco:Fournisseur ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:nomProduit a owl:DatatypeProperty ;
+    rdfs:label "product name"@en,
+        "nom du produit"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:nomServiceClient a owl:DatatypeProperty ;
+    rdfs:label "customer service name"@en,
+        "nom du service client"@fr ;
+    rdfs:domain eco:ServiceClient ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:nom .
+
+eco:note a owl:DatatypeProperty ;
+    rdfs:label "rating"@en,
+        "note"@fr ;
+    rdfs:domain eco:Avis ;
+    rdfs:range xsd:integer .
+
+eco:numero a owl:DatatypeProperty ;
+    rdfs:label "number"@en,
+        "numéro"@fr ;
+    rdfs:domain eco:Facture ;
+    rdfs:range xsd:integer .
+
+eco:pourcentage a owl:DatatypeProperty ;
+    rdfs:label "percentage"@en,
+        "pourcentage"@fr ;
+    rdfs:domain eco:Remise ;
+    rdfs:range xsd:decimal .
+
+eco:prix a owl:DatatypeProperty ;
+    rdfs:label "price"@en,
+        "prix"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range xsd:decimal .
+
+eco:specialite a owl:DatatypeProperty ;
+    rdfs:label "specialty"@en,
+        "spécialité"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range xsd:string .
+
+eco:statut a owl:DatatypeProperty ;
+    rdfs:label "status"@en,
+        "statut"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range xsd:string .
+
+eco:telephoneBoutique a owl:DatatypeProperty ;
+    rdfs:label "shop phone"@en,
+        "téléphone de la boutique"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:telephone .
+
+eco:telephoneServiceClient a owl:DatatypeProperty ;
+    rdfs:label "customer service phone"@en,
+        "téléphone du service client"@fr ;
+    rdfs:domain eco:ServiceClient ;
+    rdfs:range xsd:string ;
+    rdfs:subPropertyOf eco:telephone .
+
+eco:CommandePrioritaire a owl:Class ;
+    rdfs:label "Priority order"@en,
+        "Commande prioritaire"@fr ;
+    rdfs:comment "Classe inférée : commande livrée par une livraison express (règle R1)."@fr ;
+    rdfs:subClassOf eco:Commande .
+
+eco:CommandeValide a owl:Class ;
+    rdfs:label "Valid order"@en,
+        "Commande valide"@fr ;
+    rdfs:comment "Classe inférée : commande avec au moins un produit, une facture et un paiement (règle R3)."@fr ;
+    rdfs:subClassOf eco:Commande .
+
+eco:PaiementCarte a owl:Class ;
+    rdfs:label "Card payment"@en,
+        "Paiement par carte"@fr ;
+    rdfs:subClassOf eco:Paiement ;
+    owl:disjointWith eco:PaiementMainAMain .
+
+eco:ProduitVendable a owl:Class ;
+    rdfs:label "Sellable product"@en,
+        "Produit vendable"@fr ;
+    rdfs:comment "Classe inférée : produit vendu par une boutique et en stock (règle R2)."@fr ;
+    rdfs:subClassOf eco:Produit .
+
+eco:appartientA a owl:ObjectProperty ;
+    rdfs:label "belongs to"@en,
+        "appartient à"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Categorie ;
+    owl:inverseOf eco:regroupe .
+
+eco:appliqueCouponA a owl:ObjectProperty ;
+    rdfs:label "applies to order"@en,
+        "applique le coupon à"@fr ;
+    rdfs:domain eco:Coupon ;
+    rdfs:range eco:Commande ;
+    owl:inverseOf eco:aPourCoupon .
+
+eco:appliqueRemiseA a owl:ObjectProperty ;
+    rdfs:label "applies to product"@en,
+        "applique la remise à"@fr ;
+    rdfs:domain eco:Remise ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:aPourRemise .
+
+eco:concerne a owl:ObjectProperty ;
+    rdfs:label "is about"@en,
+        "concerne"@fr ;
+    rdfs:domain eco:Avis ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:aPourAvis .
+
+eco:ecrit a owl:ObjectProperty ;
+    rdfs:label "writes"@en,
+        "écrit"@fr ;
+    rdfs:domain eco:Client ;
+    rdfs:range eco:Avis ;
+    owl:inverseOf eco:estEcritPar .
+
+eco:effectue a owl:ObjectProperty ;
+    rdfs:label "makes"@en,
+        "effectue"@fr ;
+    rdfs:domain eco:Client ;
+    rdfs:range eco:Paiement ;
+    owl:inverseOf eco:estEffectuePar .
+
+eco:fournit a owl:ObjectProperty ;
+    rdfs:label "supplies"@en,
+        "fournit"@fr ;
+    rdfs:domain eco:Fournisseur ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:estFourniPar .
+
+eco:gere a owl:ObjectProperty ;
+    rdfs:label "handles"@en,
+        "gère"@fr ;
+    rdfs:domain eco:ServiceClient ;
+    rdfs:range eco:Commande ;
+    owl:inverseOf eco:estGereePar .
+
+eco:livre a owl:ObjectProperty ;
+    rdfs:label "delivers"@en,
+        "livre"@fr ;
+    rdfs:domain eco:Livraison ;
+    rdfs:range eco:Commande ;
+    owl:inverseOf eco:estLivreePar .
+
+eco:passe a owl:ObjectProperty ;
+    rdfs:label "places"@en,
+        "passe"@fr ;
+    rdfs:domain eco:Client ;
+    rdfs:range eco:Commande ;
+    owl:inverseOf eco:estPasseePar .
+
+eco:quantite a owl:DatatypeProperty ;
+    rdfs:label "quantity"@en,
+        "quantité"@fr ;
+    rdfs:domain eco:Stock ;
+    rdfs:range xsd:integer .
+
+eco:stocke a owl:ObjectProperty ;
+    rdfs:label "stores"@en,
+        "stocke"@fr ;
+    rdfs:domain eco:Entrepot ;
+    rdfs:range eco:Stock ;
+    owl:inverseOf eco:estStockeDans .
+
+eco:A01 a owl:NamedIndividual,
+        eco:Avis ;
+    eco:commentaire "Très satisfait" ;
+    eco:concerne eco:P01 ;
+    eco:estEcritPar eco:C01 ;
+    eco:note 5 .
+
+eco:A02 a owl:NamedIndividual,
+        eco:Avis ;
+    eco:commentaire "Bonne qualité" ;
+    eco:concerne eco:P05 ;
+    eco:estEcritPar eco:C02 ;
+    eco:note 4 .
+
+eco:B02 a owl:NamedIndividual,
+        eco:Boutique ;
+    eco:adresseBoutique "Oran, Centre" ;
+    eco:emailBoutique "applecorner@mail.com" ;
+    eco:nomBoutique "AppleCorner" ;
+    eco:specialite "Téléphonie" ;
+    eco:telephoneBoutique "0555234567" ;
+    eco:vend eco:P02 .
+
+eco:Cat01 a owl:NamedIndividual,
+        eco:Categorie ;
+    eco:nomCategorie "Électronique" ;
+    eco:regroupe eco:P01 .
+
+eco:Cat02 a owl:NamedIndividual,
+        eco:Categorie ;
+    eco:nomCategorie "Téléphonie" ;
+    eco:regroupe eco:P02 .
+
+eco:Cat03 a owl:NamedIndividual,
+        eco:Categorie ;
+    eco:nomCategorie "Informatique" ;
+    eco:regroupe eco:P03 .
+
+eco:Cp01 a owl:NamedIndividual,
+        eco:Coupon ;
+    eco:appliqueCouponA eco:O01 ;
+    eco:code "WELCOME10" ;
+    eco:dateCoupon "2025-12-31T12:03:00"^^xsd:dateTime .
+
+eco:Cp02 a owl:NamedIndividual,
+        eco:Coupon ;
+    eco:appliqueCouponA eco:O02 ;
+    eco:code "NOEL20" ;
+    eco:dateCoupon "2025-12-25T13:30:04"^^xsd:dateTime .
+
+eco:E02 a owl:NamedIndividual,
+        eco:Entrepot ;
+    eco:adresseEntrepot "Oran, Es Senia" ;
+    eco:capacite 20 ;
+    eco:stocke eco:S02 .
+
+eco:F02 a owl:NamedIndividual,
+        eco:Fournisseur ;
+    eco:emailFournisseur "apple@mail.com" ;
+    eco:fournit eco:P02 ;
+    eco:nomFournisseur "Apple" .
+
+eco:Fa01 a owl:NamedIndividual,
+        eco:Facture ;
+    eco:dateFacture "2025-12-10T14:40:00"^^xsd:dateTime ;
+    eco:estGenereePar eco:O01 ;
+    eco:numero 1 .
+
+eco:Fa02 a owl:NamedIndividual,
+        eco:Facture ;
+    eco:dateFacture "2025-12-09T14:40:00"^^xsd:dateTime ;
+    eco:estGenereePar eco:O02 ;
+    eco:numero 2 .
+
+eco:L01 a owl:NamedIndividual,
+        eco:LivraisonExpress ;
+    eco:dateLivraison "2025-12-11T10:00:00"^^xsd:dateTime ;
+    eco:livre eco:O01 .
+
+eco:L02 a owl:NamedIndividual,
+        eco:LivraisonStandard ;
+    eco:dateLivraison "2025-12-13T15:00:00"^^xsd:dateTime ;
+    eco:livre eco:O02 .
+
+eco:LivraisonExpress a owl:Class ;
+    rdfs:label "Express delivery"@en,
+        "Livraison express"@fr ;
+    rdfs:subClassOf eco:Livraison ;
+    owl:disjointWith eco:LivraisonStandard .
+
+eco:LivraisonStandard a owl:Class ;
+    rdfs:label "Standard delivery"@en,
+        "Livraison standard"@fr ;
+    rdfs:subClassOf eco:Livraison .
+
+eco:PaiementMainAMain a owl:Class ;
+    rdfs:label "Cash payment"@en,
+        "Paiement de main à main"@fr ;
+    rdfs:subClassOf eco:Paiement .
+
+eco:R01 a owl:NamedIndividual,
+        eco:Remise ;
+    eco:appliqueRemiseA eco:P01 ;
+    eco:pourcentage 10.0 .
+
+eco:R02 a owl:NamedIndividual,
+        eco:Remise ;
+    eco:appliqueRemiseA eco:P05 ;
+    eco:pourcentage 20.0 .
+
+eco:SC01 a owl:NamedIndividual,
+        eco:ServiceClient ;
+    eco:emailServiceClient "supporttech@mail.com" ;
+    eco:gere eco:O01 ;
+    eco:nomServiceClient "SupportTech" ;
+    eco:telephoneServiceClient "0555456789" .
+
+eco:SC02 a owl:NamedIndividual,
+        eco:ServiceClient ;
+    eco:emailServiceClient "supportmaison@mail.com" ;
+    eco:gere eco:O02 ;
+    eco:nomServiceClient "SupportMaison" ;
+    eco:telephoneServiceClient "0555567890" .
+
+eco:aPourAvis a owl:ObjectProperty ;
+    rdfs:label "has review"@en,
+        "a pour avis"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Avis .
+
+eco:aPourCoupon a owl:ObjectProperty ;
+    rdfs:label "has coupon"@en,
+        "a pour coupon"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Coupon .
+
+eco:aPourRemise a owl:ObjectProperty ;
+    rdfs:label "has discount"@en,
+        "a pour remise"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Remise .
+
+eco:aPourStock a owl:ObjectProperty ;
+    rdfs:label "has stock"@en,
+        "a pour stock"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Stock .
+
+eco:adresse a owl:DatatypeProperty ;
+    rdfs:label "address"@en,
+        "adresse"@fr ;
+    rdfs:comment "Propriété générique : ses sous-propriétés précisent le domaine."@fr ;
+    rdfs:range xsd:string .
+
+eco:concerneProduit a owl:ObjectProperty ;
+    rdfs:label "is stock of"@en,
+        "concerne le produit"@fr ;
+    rdfs:domain eco:Stock ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:aPourStock .
+
+eco:estEcritPar a owl:ObjectProperty ;
+    rdfs:label "is written by"@en,
+        "est écrit par"@fr ;
+    rdfs:domain eco:Avis ;
+    rdfs:range eco:Client .
+
+eco:estEffectuePar a owl:ObjectProperty ;
+    rdfs:label "is made by"@en,
+        "est effectué par"@fr ;
+    rdfs:domain eco:Paiement ;
+    rdfs:range eco:Client .
+
+eco:estFourniPar a owl:ObjectProperty ;
+    rdfs:label "is supplied by"@en,
+        "est fourni par"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Fournisseur .
+
+eco:estGenereePar a owl:ObjectProperty ;
+    rdfs:label "is generated by"@en,
+        "est générée par"@fr ;
+    rdfs:domain eco:Facture ;
+    rdfs:range eco:Commande .
+
+eco:estGereePar a owl:ObjectProperty ;
+    rdfs:label "is handled by"@en,
+        "est gérée par"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:ServiceClient .
+
+eco:estPasseePar a owl:ObjectProperty ;
+    rdfs:label "is placed by"@en,
+        "est passée par"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Client .
+
+eco:estPayeePar a owl:ObjectProperty ;
+    rdfs:label "is paid by"@en,
+        "est payée par"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Paiement ;
+    owl:inverseOf eco:regle .
+
+eco:estStockeDans a owl:ObjectProperty ;
+    rdfs:label "is stored in"@en,
+        "est stocké dans"@fr ;
+    rdfs:domain eco:Stock ;
+    rdfs:range eco:Entrepot .
+
+eco:estVenduPar a owl:ObjectProperty ;
+    rdfs:label "is sold by"@en,
+        "est vendu par"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Boutique .
+
+eco:figureDans a owl:ObjectProperty ;
+    rdfs:label "is in order"@en,
+        "figure dans"@fr ;
+    rdfs:domain eco:Produit ;
+    rdfs:range eco:Commande .
+
+eco:genere a owl:ObjectProperty ;
+    rdfs:label "generates"@en,
+        "génère"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Facture ;
+    owl:inverseOf eco:estGenereePar .
+
+eco:regle a owl:ObjectProperty ;
+    rdfs:label "pays for"@en,
+        "règle"@fr ;
+    rdfs:domain eco:Paiement ;
+    rdfs:range eco:Commande .
+
+eco:regroupe a owl:ObjectProperty ;
+    rdfs:label "groups"@en,
+        "regroupe"@fr ;
+    rdfs:domain eco:Categorie ;
+    rdfs:range eco:Produit .
+
+eco:telephone a owl:DatatypeProperty ;
+    rdfs:label "phone"@en,
+        "téléphone"@fr ;
+    rdfs:comment "Propriété générique : ses sous-propriétés précisent le domaine."@fr ;
+    rdfs:range xsd:string .
+
+eco:vend a owl:ObjectProperty ;
+    rdfs:label "sells"@en,
+        "vend"@fr ;
+    rdfs:domain eco:Boutique ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:estVenduPar .
+
+var:b a swrl:Variable .
+
+var:f a swrl:Variable .
+
+var:l a swrl:Variable .
+
+var:pay a swrl:Variable .
+
+var:q a swrl:Variable .
+
+eco:B01 a owl:NamedIndividual,
+        eco:Boutique ;
+    eco:adresseBoutique "Alger Centre" ;
+    eco:emailBoutique "techstore@mail.com" ;
+    eco:nomBoutique "TechStore" ;
+    eco:specialite "Électronique" ;
+    eco:telephoneBoutique "0555123456" ;
+    eco:vend eco:P01,
+        eco:P03 .
+
+eco:B03 a owl:NamedIndividual,
+        eco:Boutique ;
+    eco:adresseBoutique "Constantine, Centre" ;
+    eco:emailBoutique "maisonshop@mail.com" ;
+    eco:nomBoutique "MaisonShop" ;
+    eco:specialite "Maison & Décoration" ;
+    eco:telephoneBoutique "0555345678" ;
+    eco:vend eco:P04,
+        eco:P05 .
+
+eco:Cat04 a owl:NamedIndividual,
+        eco:Categorie ;
+    eco:nomCategorie "Maison & Décoration" ;
+    eco:regroupe eco:P04,
+        eco:P05 .
+
+eco:E01 a owl:NamedIndividual,
+        eco:Entrepot ;
+    eco:adresseEntrepot "Alger, Oued Smar" ;
+    eco:capacite 70 ;
+    eco:stocke eco:S01,
+        eco:S03 .
+
+eco:E03 a owl:NamedIndividual,
+        eco:Entrepot ;
+    eco:adresseEntrepot "Constantine, Ali Mendjeli" ;
+    eco:capacite 50 ;
+    eco:stocke eco:S04,
+        eco:S05 .
+
+eco:F01 a owl:NamedIndividual,
+        eco:Fournisseur ;
+    eco:emailFournisseur "hp.logitech@mail.com" ;
+    eco:fournit eco:P01,
+        eco:P03 ;
+    eco:nomFournisseur "HP & Logitech" .
+
+eco:F03 a owl:NamedIndividual,
+        eco:Fournisseur ;
+    eco:emailFournisseur "maisondesign@mail.com" ;
+    eco:fournit eco:P04,
+        eco:P05 ;
+    eco:nomFournisseur "MaisonDesign" .
+
+eco:Pay01 a owl:NamedIndividual,
+        eco:PaiementCarte ;
+    eco:datePaiement "2025-12-10T14:35:00"^^xsd:dateTime ;
+    eco:estEffectuePar eco:C01 ;
+    eco:montant 1350.00 ;
+    eco:regle eco:O01 .
+
+eco:Pay02 a owl:NamedIndividual,
+        eco:PaiementMainAMain ;
+    eco:datePaiement "2025-12-13T15:00:00"^^xsd:dateTime ;
+    eco:estEffectuePar eco:C02 ;
+    eco:montant 1650.00 ;
+    eco:regle eco:O02 .
+
+eco:S01 a owl:NamedIndividual,
+        eco:Stock ;
+    eco:concerneProduit eco:P01 ;
+    eco:estStockeDans eco:E01 ;
+    eco:quantite 12 .
+
+eco:S02 a owl:NamedIndividual,
+        eco:Stock ;
+    eco:concerneProduit eco:P02 ;
+    eco:estStockeDans eco:E02 ;
+    eco:quantite 8 .
+
+eco:S03 a owl:NamedIndividual,
+        eco:Stock ;
+    eco:concerneProduit eco:P03 ;
+    eco:estStockeDans eco:E01 ;
+    eco:quantite 20 .
+
+eco:S04 a owl:NamedIndividual,
+        eco:Stock ;
+    eco:concerneProduit eco:P04 ;
+    eco:estStockeDans eco:E03 ;
+    eco:quantite 0 .
+
+eco:S05 a owl:NamedIndividual,
+        eco:Stock ;
+    eco:concerneProduit eco:P05 ;
+    eco:estStockeDans eco:E03 ;
+    eco:quantite 30 .
+
+eco:contient a owl:ObjectProperty ;
+    rdfs:label "contains"@en,
+        "contient"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Produit ;
+    owl:inverseOf eco:figureDans .
+
+eco:estLivreePar a owl:ObjectProperty ;
+    rdfs:label "is delivered by"@en,
+        "est livrée par"@fr ;
+    rdfs:domain eco:Commande ;
+    rdfs:range eco:Livraison .
+
+var:s a swrl:Variable .
+
+eco:C01 a owl:NamedIndividual,
+        eco:Client ;
+    eco:ecrit eco:A01 ;
+    eco:effectue eco:Pay01 ;
+    eco:emailClient "ahmed@mail.com" ;
+    eco:nomClient "Ahmed B" ;
+    eco:passe eco:O01 .
+
+eco:C02 a owl:NamedIndividual,
+        eco:Client ;
+    eco:ecrit eco:A02 ;
+    eco:effectue eco:Pay02 ;
+    eco:emailClient "leila@mail.com" ;
+    eco:nomClient "Leila K" ;
+    eco:passe eco:O02 .
+
+eco:email a owl:DatatypeProperty ;
+    rdfs:label "email"@en,
+        "email"@fr ;
+    rdfs:comment "Propriété générique : ses sous-propriétés précisent le domaine."@fr ;
+    rdfs:range xsd:string .
+
+eco:P04 a owl:NamedIndividual,
+        eco:Produit ;
+    eco:aPourStock eco:S04 ;
+    eco:appartientA eco:Cat04 ;
+    eco:description "Table salon bois massif" ;
+    eco:estFourniPar eco:F03 ;
+    eco:estVenduPar eco:B03 ;
+    eco:nomProduit "Table Bois" ;
+    eco:prix 30000.00 .
+
+eco:date a owl:DatatypeProperty ;
+    rdfs:label "date"@en,
+        "date"@fr ;
+    rdfs:comment "Propriété générique : ses sous-propriétés précisent le domaine."@fr ;
+    rdfs:range xsd:dateTime .
+
+eco:P02 a owl:NamedIndividual,
+        eco:Produit ;
+    eco:aPourStock eco:S02 ;
+    eco:appartientA eco:Cat02 ;
+    eco:description "Smartphone Apple" ;
+    eco:estFourniPar eco:F02 ;
+    eco:estVenduPar eco:B02 ;
+    eco:nomProduit "iPhone 14" ;
+    eco:prix 160000.00 .
+
+eco:P03 a owl:NamedIndividual,
+        eco:Produit ;
+    eco:aPourStock eco:S03 ;
+    eco:appartientA eco:Cat03 ;
+    eco:description "Clavier mécanique RGB" ;
+    eco:estFourniPar eco:F01 ;
+    eco:estVenduPar eco:B01 ;
+    eco:nomProduit "Clavier Logitech" ;
+    eco:prix 15000.00 .
+
+eco:nom a owl:DatatypeProperty ;
+    rdfs:label "name"@en,
+        "nom"@fr ;
+    rdfs:comment "Propriété générique : ses sous-propriétés précisent le domaine."@fr ;
+    rdfs:range xsd:string .
+
+var:p a swrl:Variable .
+
+eco:Livraison a owl:Class ;
+    rdfs:label "Delivery"@en,
+        "Livraison"@fr ;
+    rdfs:comment "Acheminement d'une ou plusieurs commandes."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:livre ] .
+
+eco:O01 a owl:NamedIndividual,
+        eco:Commande ;
+    eco:aPourCoupon eco:Cp01 ;
+    eco:contient eco:P01,
+        eco:P03 ;
+    eco:dateCommande "2025-12-10T14:30:00"^^xsd:dateTime ;
+    eco:estGereePar eco:SC01 ;
+    eco:estLivreePar eco:L01 ;
+    eco:estPasseePar eco:C01 ;
+    eco:estPayeePar eco:Pay01 ;
+    eco:genere eco:Fa01 ;
+    eco:statut "En cours" .
+
+eco:O02 a owl:NamedIndividual,
+        eco:Commande ;
+    eco:aPourCoupon eco:Cp02 ;
+    eco:contient eco:P02,
+        eco:P05 ;
+    eco:dateCommande "2025-12-09T14:30:00"^^xsd:dateTime ;
+    eco:estGereePar eco:SC02 ;
+    eco:estLivreePar eco:L02 ;
+    eco:estPasseePar eco:C02 ;
+    eco:estPayeePar eco:Pay02 ;
+    eco:genere eco:Fa02 ;
+    eco:statut "Livrée" .
+
+eco:Remise a owl:Class ;
+    rdfs:label "Discount"@en,
+        "Remise"@fr ;
+    rdfs:comment "Réduction en pourcentage appliquée à un produit."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:appliqueRemiseA ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Coupon a owl:Class ;
+    rdfs:label "Coupon"@en,
+        "Coupon"@fr ;
+    rdfs:comment "Code promotionnel applicable à une commande."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:appliqueCouponA ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:P01 a owl:NamedIndividual,
+        eco:Produit ;
+    eco:aPourRemise eco:R01 ;
+    eco:aPourStock eco:S01 ;
+    eco:appartientA eco:Cat01 ;
+    eco:description "PC portable 15\" 8Go RAM" ;
+    eco:estFourniPar eco:F01 ;
+    eco:estVenduPar eco:B01 ;
+    eco:nomProduit "Laptop HP 15" ;
+    eco:prix 120000.00 .
+
+eco:P05 a owl:NamedIndividual,
+        eco:Produit ;
+    eco:aPourRemise eco:R02 ;
+    eco:aPourStock eco:S05 ;
+    eco:appartientA eco:Cat04 ;
+    eco:description "Lampe bureau LED" ;
+    eco:estFourniPar eco:F03 ;
+    eco:estVenduPar eco:B03 ;
+    eco:nomProduit "Lampe LED" ;
+    eco:prix 5000.00 .
+
+var:c a swrl:Variable .
+
+eco:Categorie a owl:Class ;
+    rdfs:label "Category"@en,
+        "Catégorie"@fr ;
+    rdfs:comment "Regroupement thématique de produits."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:regroupe ] .
+
+eco:Entrepot a owl:Class ;
+    rdfs:label "Warehouse"@en,
+        "Entrepôt"@fr ;
+    rdfs:comment "Lieu physique de stockage."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Stock ;
+            owl:onProperty eco:stocke ] .
+
+eco:Facture a owl:Class ;
+    rdfs:label "Invoice"@en,
+        "Facture"@fr ;
+    rdfs:comment "Document comptable généré par une commande."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:estGenereePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Fournisseur a owl:Class ;
+    rdfs:label "Supplier"@en,
+        "Fournisseur"@fr ;
+    rdfs:comment "Organisation qui fournit des produits."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:fournit ] .
+
+eco:ServiceClient a owl:Class ;
+    rdfs:label "Customer service"@en,
+        "Service client"@fr ;
+    rdfs:comment "Service qui gère le suivi des commandes."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:gere ] .
+
+eco:Avis a owl:Class ;
+    rdfs:label "Review"@en,
+        "Avis"@fr ;
+    rdfs:comment "Évaluation d'un produit rédigée par un client."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Client ;
+            owl:onProperty eco:estEcritPar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:concerne ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Paiement a owl:Class ;
+    rdfs:label "Payment"@en,
+        "Paiement"@fr ;
+    rdfs:comment "Règlement effectué par un client."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:regle ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Client ;
+            owl:onProperty eco:estEffectuePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Boutique a owl:Class ;
+    rdfs:label "Shop"@en,
+        "Boutique"@fr ;
+    rdfs:comment "Point de vente qui commercialise des produits."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:vend ] .
+
+eco:Client a owl:Class ;
+    rdfs:label "Customer"@en,
+        "Client"@fr ;
+    rdfs:comment "Personne qui passe des commandes et effectue des paiements."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Avis ;
+            owl:onProperty eco:ecrit ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:passe ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Paiement ;
+            owl:onProperty eco:effectue ] .
+
+eco:Stock a owl:Class ;
+    rdfs:label "Stock"@en,
+        "Stock"@fr ;
+    rdfs:comment "Quantité disponible d'un produit dans un entrepôt."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:concerneProduit ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Entrepot ;
+            owl:onProperty eco:estStockeDans ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Commande a owl:Class ;
+    rdfs:label "Order"@en,
+        "Commande"@fr ;
+    rdfs:comment "Ensemble de produits commandés par un client."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:onClass eco:ServiceClient ;
+            owl:onProperty eco:estGereePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "10"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Coupon ;
+            owl:onProperty eco:aPourCoupon ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Paiement ;
+            owl:onProperty eco:estPayeePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "20"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:contient ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Livraison ;
+            owl:onProperty eco:estLivreePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:minQualifiedCardinality "1"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Produit ;
+            owl:onProperty eco:contient ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Client ;
+            owl:onProperty eco:estPasseePar ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Facture ;
+            owl:onProperty eco:genere ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ] .
+
+eco:Produit a owl:Class ;
+    rdfs:label "Product"@en,
+        "Produit"@fr ;
+    rdfs:comment "Article proposé à la vente."@fr ;
+    rdfs:subClassOf [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Stock ;
+            owl:onProperty eco:aPourStock ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Avis ;
+            owl:onProperty eco:aPourAvis ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Boutique ;
+            owl:onProperty eco:estVenduPar ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Fournisseur ;
+            owl:onProperty eco:estFourniPar ],
+        [ a owl:Restriction ;
+            owl:onClass eco:Categorie ;
+            owl:onProperty eco:appartientA ;
+            owl:qualifiedCardinality "1"^^xsd:nonNegativeInteger ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "100"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Commande ;
+            owl:onProperty eco:figureDans ],
+        [ a owl:Restriction ;
+            owl:maxQualifiedCardinality "10"^^xsd:nonNegativeInteger ;
+            owl:onClass eco:Remise ;
+            owl:onProperty eco:aPourRemise ] .
+
+[] a owl:AllDisjointClasses ;
+    owl:members ( eco:Avis eco:Boutique eco:Categorie eco:Client eco:Commande eco:Coupon eco:Entrepot eco:Facture eco:Fournisseur eco:Livraison eco:Paiement eco:Produit eco:Remise eco:ServiceClient eco:Stock ) .
+
+[] a swrl:Imp ;
+    rdfs:label "R1 - Commande prioritaire" ;
+    swrla:isRuleEnabled true ;
+    rdfs:comment "Toute commande livrée par une livraison express est prioritaire."@fr ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:c ;
+                    swrl:classPredicate eco:Commande ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 var:c ;
+                            swrl:argument2 var:l ;
+                            swrl:propertyPredicate eco:estLivreePar ] ;
+                    rdf:rest [ a swrl:AtomList ;
+                            rdf:first [ a swrl:ClassAtom ;
+                                    swrl:argument1 var:l ;
+                                    swrl:classPredicate eco:LivraisonExpress ] ;
+                            rdf:rest () ] ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:c ;
+                    swrl:classPredicate eco:CommandePrioritaire ] ;
+            rdf:rest () ] .
+
+[] a owl:AllDifferent ;
+    owl:distinctMembers ( eco:A01 eco:A02 eco:B01 eco:B02 eco:B03 eco:C01 eco:C02 eco:Cat01 eco:Cat02 eco:Cat03 eco:Cat04 eco:Cp01 eco:Cp02 eco:E01 eco:E02 eco:E03 eco:F01 eco:F02 eco:F03 eco:Fa01 eco:Fa02 eco:L01 eco:L02 eco:O01 eco:O02 eco:P01 eco:P02 eco:P03 eco:P04 eco:P05 eco:Pay01 eco:Pay02 eco:R01 eco:R02 eco:S01 eco:S02 eco:S03 eco:S04 eco:S05 eco:SC01 eco:SC02 ) .
+
+[] a swrl:Imp ;
+    rdfs:label "R2 - Produit vendable" ;
+    swrla:isRuleEnabled true ;
+    rdfs:comment "Un produit est vendable s'il est vendu par une boutique et associé à un stock de quantité > 0."@fr ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:p ;
+                    swrl:classPredicate eco:Produit ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 var:b ;
+                            swrl:argument2 var:p ;
+                            swrl:propertyPredicate eco:vend ] ;
+                    rdf:rest [ a swrl:AtomList ;
+                            rdf:first [ a swrl:ClassAtom ;
+                                    swrl:argument1 var:b ;
+                                    swrl:classPredicate eco:Boutique ] ;
+                            rdf:rest [ a swrl:AtomList ;
+                                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                                            swrl:argument1 var:s ;
+                                            swrl:argument2 var:p ;
+                                            swrl:propertyPredicate eco:concerneProduit ] ;
+                                    rdf:rest [ a swrl:AtomList ;
+                                            rdf:first [ a swrl:ClassAtom ;
+                                                    swrl:argument1 var:s ;
+                                                    swrl:classPredicate eco:Stock ] ;
+                                            rdf:rest [ a swrl:AtomList ;
+                                                    rdf:first [ a swrl:DatavaluedPropertyAtom ;
+                                                            swrl:argument1 var:s ;
+                                                            swrl:argument2 var:q ;
+                                                            swrl:propertyPredicate eco:quantite ] ;
+                                                    rdf:rest [ a swrl:AtomList ;
+                                                            rdf:first [ a swrl:BuiltinAtom ;
+                                                                    swrl:arguments ( var:q 0 ) ;
+                                                                    swrl:builtin swrlb:greaterThan ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:p ;
+                    swrl:classPredicate eco:ProduitVendable ] ;
+            rdf:rest () ] .
+
+[] a swrl:Imp ;
+    rdfs:label "R3 - Commande valide" ;
+    swrla:isRuleEnabled true ;
+    rdfs:comment "Une commande est valide si elle contient au moins un produit, génère une facture et est payée."@fr ;
+    swrl:body [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:c ;
+                    swrl:classPredicate eco:Commande ] ;
+            rdf:rest [ a swrl:AtomList ;
+                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                            swrl:argument1 var:c ;
+                            swrl:argument2 var:p ;
+                            swrl:propertyPredicate eco:contient ] ;
+                    rdf:rest [ a swrl:AtomList ;
+                            rdf:first [ a swrl:ClassAtom ;
+                                    swrl:argument1 var:p ;
+                                    swrl:classPredicate eco:Produit ] ;
+                            rdf:rest [ a swrl:AtomList ;
+                                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                                            swrl:argument1 var:c ;
+                                            swrl:argument2 var:f ;
+                                            swrl:propertyPredicate eco:genere ] ;
+                                    rdf:rest [ a swrl:AtomList ;
+                                            rdf:first [ a swrl:ClassAtom ;
+                                                    swrl:argument1 var:f ;
+                                                    swrl:classPredicate eco:Facture ] ;
+                                            rdf:rest [ a swrl:AtomList ;
+                                                    rdf:first [ a swrl:IndividualPropertyAtom ;
+                                                            swrl:argument1 var:c ;
+                                                            swrl:argument2 var:pay ;
+                                                            swrl:propertyPredicate eco:estPayeePar ] ;
+                                                    rdf:rest [ a swrl:AtomList ;
+                                                            rdf:first [ a swrl:ClassAtom ;
+                                                                    swrl:argument1 var:pay ;
+                                                                    swrl:classPredicate eco:Paiement ] ;
+                                                            rdf:rest () ] ] ] ] ] ] ] ;
+    swrl:head [ a swrl:AtomList ;
+            rdf:first [ a swrl:ClassAtom ;
+                    swrl:argument1 var:c ;
+                    swrl:classPredicate eco:CommandeValide ] ;
+            rdf:rest () ] .
+

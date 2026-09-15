@@ -1,0 +1,10 @@
+# Note moyenne des avis par boutique (boutiques sans avis incluses).
+PREFIX eco: <https://thiilelli.github.io/Onto/ontology#>
+
+SELECT ?boutique (COUNT(?note) AS ?nbAvis) (AVG(?note) AS ?noteMoyenne)
+WHERE {
+  ?b a eco:Boutique ; eco:nomBoutique ?boutique .
+  OPTIONAL { ?b eco:vend/^eco:concerne/eco:note ?note }
+}
+GROUP BY ?boutique
+ORDER BY DESC(?noteMoyenne)

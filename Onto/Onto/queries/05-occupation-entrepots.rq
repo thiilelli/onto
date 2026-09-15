@@ -1,0 +1,10 @@
+# Taux d'occupation de chaque entrepôt.
+PREFIX eco: <https://thiilelli.github.io/Onto/ontology#>
+
+SELECT ?adresse ?capacite (SUM(?q) AS ?stocke) (ROUND(100 * SUM(?q) / ?capacite) AS ?occupationPct)
+WHERE {
+  ?e a eco:Entrepot ; eco:adresseEntrepot ?adresse ; eco:capacite ?capacite .
+  ?s eco:estStockeDans ?e ; eco:quantite ?q .
+}
+GROUP BY ?adresse ?capacite
+ORDER BY DESC(?occupationPct)
