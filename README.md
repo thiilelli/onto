@@ -137,15 +137,4 @@ tests/                          tests pytest (raisonnement et validation)
 - **Turtle comme format source** : lisible, adapté aux diffs Git, ouvert directement par Protégé.
 - **Super-propriétés génériques** (`nom`, `email`, `date`…) : une requête sur `eco:date` retrouve toutes les dates, quel que soit le type d'entité.
 
-## Limites et perspectives
 
-- Les coupons n'ont pas de valeur de réduction dans le modèle, et les montants de paiement du jeu de test ne sont pas réconciliés avec les prix des produits.
-- Alignement avec des vocabulaires établis ([schema.org](https://schema.org/), [GoodRelations](http://www.heppnetz.de/projects/goodrelations/)) pour rendre les données interopérables.
-- Publication d'une documentation HTML (Widoco ou pyLODE) sur GitHub Pages pour rendre les IRI déréférençables.
-- Passage à un jeu de données réaliste (données e-commerce ouvertes converties en RDF) pour évaluer le coût du raisonnement à plus grande échelle.
-
-## Auteure
-
-**Thilleli Rouas** · [GitHub](https://github.com/thiilelli)
-
-Prototype réalisé dans le cadre d'un projet académique (novembre 2025), revu et publié en septembre 2026.
