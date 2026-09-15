@@ -5,8 +5,6 @@
 
 Ontologie OWL 2 du commerce électronique (clients, commandes, produits, stocks, paiements, livraisons) accompagnée d'une chaîne complète de traitement : raisonnement automatique avec règles SWRL, validation des données en SHACL, interrogation SPARQL et tests d'intégration continue.
 
-Le projet est né d'un travail académique réalisé sous Protégé. Avant publication, il a été revu pour corriger des erreurs de modélisation qui faisaient produire au raisonneur des inférences absurdes, puis complété par l'outillage permettant de vérifier automatiquement que l'ontologie reste cohérente. Le détail des corrections est dans le [CHANGELOG](CHANGELOG.md).
-
 ## Modèle
 
 | | |
@@ -62,7 +60,7 @@ OWL raisonne sous l'**hypothèse du monde ouvert** : si une commande n'a pas de 
 
 Deux conséquences ont guidé la conception :
 
-1. **Sans hypothèse du nom unique**, deux valeurs pour une propriété limitée à 1 ne déclenchent pas d'erreur : le raisonneur en déduit que les deux individus sont le même. C'est ce qui arrivait dans le prototype avec un stock associé à deux produits. L'ontologie déclare les individus distincts (`owl:AllDifferent`) pour transformer ces cas en incohérences détectables.
+1. **Sans hypothèse du nom unique**, deux valeurs pour une propriété limitée à 1 ne déclenchent pas d'erreur : le raisonneur en déduit que les deux individus sont le même. Par exemple, un stock associé à deux produits ferait conclure que ces produits sont identiques. L'ontologie déclare donc les individus distincts (`owl:AllDifferent`) pour transformer ces cas en incohérences détectables.
 2. **Pour valider des données**, il faut le monde fermé. Les formes SHACL vérifient ce qu'OWL ne peut pas vérifier : champs obligatoires, notes entre 1 et 5, format des emails, paiement postérieur à la commande, somme des stocks inférieure à la capacité de l'entrepôt.
 
 Les tests matérialisent cette distinction : une facture manquante est acceptée par Pellet mais rejetée par SHACL, alors qu'un individu à la fois `Client` et `Produit` rend l'ontologie incohérente.
@@ -129,12 +127,4 @@ scripts/query.py                exécution des requêtes (rdflib)
 tests/                          tests pytest (raisonnement et validation)
 .github/workflows/ci.yml        intégration continue
 ```
-
-## Choix de conception
-
-- **Restrictions en `rdfs:subClassOf`** : une restriction en `owl:equivalentClass` est une condition suffisante d'appartenance. Avec « au plus 100 produits », toute ressource sans produit devenait une `Boutique`.
-- **Classes inférées par règles plutôt que définies en OWL** : R2 compare une valeur numérique, ce qu'une définition OWL exprimerait mal ; R1 et R3 restent en SWRL par homogénéité et lisibilité.
-- **Turtle comme format source** : lisible, adapté aux diffs Git, ouvert directement par Protégé.
-- **Super-propriétés génériques** (`nom`, `email`, `date`…) : une requête sur `eco:date` retrouve toutes les dates, quel que soit le type d'entité.
-
 
