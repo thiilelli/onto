@@ -50,7 +50,7 @@ Les identifiants sont en ASCII ; chaque classe et propriété porte des libellé
 
 | Règle | SWRL | Résultat sur les données |
 |---|---|---|
-| R1 : commande prioritaire | `Commande(?c) ∧ estLivreePar(?c, ?l) ∧ LivraisonExpress(?l) → CommandePrioritaire(?c)` | O01 |
+| R1 : commande priorit | `Commande(?c) ∧ estLivreePar(?c, ?l) ∧ LivraisonExpress(?l) → CommandePrioritaire(?c)` | O01 |
 | R2 : produit vendable | `Produit(?p) ∧ vend(?b, ?p) ∧ Boutique(?b) ∧ concerneProduit(?s, ?p) ∧ quantite(?s, ?q) ∧ swrlb:greaterThan(?q, 0) → ProduitVendable(?p)` | P01, P02, P03, P05 (P04 est en rupture) |
 | R3 : commande valide | `Commande(?c) ∧ contient(?c, ?p) ∧ genere(?c, ?f) ∧ estPayeePar(?c, ?pay) → CommandeValide(?c)` | O01, O02 |
 
